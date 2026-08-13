@@ -1,49 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Task App</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 500px; margin: 50px auto; padding: 20px; }
-    button { padding: 8px 12px; background: #0070f3; color: white; border: none; border-radius: 4px; cursor: pointer; }
-    input { padding: 8px; width: 70%; margin-right: 5px; }
-    li { background: #f0f0f0; margin: 5px 0; padding: 10px; border-radius: 4px; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager App</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>My Live Task List</h1>
-  <div>
-    <input type="text" id="taskInput" placeholder="New Task...">
-    <button onclick="addTask()">Add Task</button>
-  </div>
-  <ul id="taskList"></ul>
-
-  <script>
-    async function loadTasks() {
-      const res = await fetch('/api/tasks');
-      const data = await res.json();
-      const list = document.getElementById('taskList');
-      list.innerHTML = '';
-      data.forEach(t => {
-        const li = document.createElement('li');
-        li.textContent = `${t.id}. ${t.title}`;
-        list.appendChild(li);
-      });
-    }
-
-    async function addTask() {
-      const input = document.getElementById('taskInput');
-      if (!input.value) return;
-      await fetch('/api/tasks', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title: input.value })
-      });
-      input.value = '';
-      loadTasks();
-    }
-
-    loadTasks();
-  </script>
+    <div class="container">
+        <h1>Task Manager</h1>
+        <form id="task-form">
+            <input type="text" id="task-input" placeholder="Enter a new task..." required autocomplete="off">
+            <button type="submit">Add Task</button>
+        </form>
+        <ul id="task-list"></ul>
+    </div>
+    <script src="script.js"></script>
 </body>
 </html>
